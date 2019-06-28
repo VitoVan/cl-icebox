@@ -5,6 +5,22 @@ Cross-Platform GUI framework written in Common Lisp
 
 ![platform support](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg) [![Build Status](https://travis-ci.com/VitoVan/cl-icebox.svg?token=zGyrVcujB9VafCKBLXZc&branch=master)](https://travis-ci.com/VitoVan/cl-icebox)
 
+### Abilities:
+
+- Write Cross-Platform GUI application easily in Common Lisp
+- Compiles to Linux / macOS / Windows
+- Deploy your application in One Single File
+
+### Useful Links:
+
+- The Common Lisp Cookbook
+
+    https://lispcookbook.github.io/cl-cookbook/
+
+- LTK: LTK - The Lisp Toolkit
+
+    http://www.peter-herth.de/ltk/
+
 ### Working Examples:
 
 - [cl-pkr](https://github.com/VitoVan/cl-pkr)
@@ -31,9 +47,7 @@ Cross-Platform GUI framework written in Common Lisp
 
 Voilà! Check your `bin` folder for the magic!
 
-> What? You use [Emacs](https://www.gnu.org/software/emacs/) and [SLIME](https://common-lisp.net/project/slime/)?
-
-> Great!
+> What? You use [Emacs](https://www.gnu.org/software/emacs/) and [SLIME](https://common-lisp.net/project/slime/)? Great!
 
 > Eval `(progn (load "cl-icebox.asd") (ql:quickload 'cl-icebox) (setf cl-icebox::*hacking* t))` in your REPL, then you can call `(cl-icebox:icebox)`, have fun!
 
