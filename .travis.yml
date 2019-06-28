@@ -1,0 +1,52 @@
+language: c
+os:
+  - linux
+  - osx
+  - windows
+
+addons:
+  apt:
+    packages:
+      - sbcl
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export HOMEBREW_NO_AUTO_UPDATE=1; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sbcl; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install make; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then wget http://prdownloads.sourceforge.net/sbcl/sbcl-1.4.14-x86-64-windows-binary.msi; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 7z x sbcl-1.4.14-x86-64-windows-binary.msi -Osbcl-1.4.14; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then choco install make; fi
+
+install:
+  - wget http://downloads.sourceforge.net/project/sbcl/sbcl/1.5.3/sbcl-1.5.3-source.tar.bz2
+  - bzip2 -cd sbcl-1.5.3-source.tar.bz2 | tar xvf -
+  - cd sbcl-1.5.3
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export GNUMAKE=gmake; fi
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then sh make.sh --with-fancy --with-sb-core-compression; fi
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then sudo sh install.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then PATH=$PATH:"../sbcl-1.4.14/" SBCL_HOME="../sbcl-1.4.14/" sh make.sh --with-fancy --with-sb-core-compression; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then sh install.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH=$PATH:"C:\Program Files/sbcl/bin/"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export SBCL_HOME="C:\Program Files/sbcl/lib/sbcl/"; fi
+  - cd ..
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export RH="C:\Program Files (x86)/Resource Hacker/ResourceHacker.exe"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cd ./.travis && ./whereis-editbin.bat && cd ..; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export EB=`cat ./.travis/EDITBIN_PATH`; fi
+  - wget https://beta.quicklisp.org/quicklisp.lisp
+  - sbcl --load quicklisp.lisp --eval '(progn (quicklisp-quickstart:install) (quit))'
+  - echo '(let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp" (user-homedir-pathname)))) (when (probe-file quicklisp-init) (load quicklisp-init)))' > ~/.sbclrc
+
+script:
+  - bash deploy.sh
+
+# https://github.com/probonopd/uploadtool
+after_success:
+  - export UPLOADTOOL_SUFFIX=$TRAVIS_OS_NAME
+  - ls -lh out/* # Assuming you have some files in out/ that you would like to upload
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh out/*
+
+branches:
+  only:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - master
