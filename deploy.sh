@@ -52,6 +52,7 @@ then
     fi
     if [ ! -f bin/rh/rh.exe ]; then
         wget http://www.angusj.com/resourcehacker/resource_hacker.zip
+        # Alternative: Resource Cracker https://www.pelock.com/download/resource-cracker.zip
         unzip resource_hacker.zip -d bin/rh
         mv bin/rh/ResourceHacker.exe bin/rh/rh.exe
     fi
@@ -60,6 +61,7 @@ then
     fi
     if [ ! -f "$TCLKIT" ]; then
         # get the not-UPX-ed version, to change icon with Resource Hacker
+        # Alternative: Resource Cracker https://www.pelock.com/products/resource-cracker
         wget -O $TCLKIT \
              https://github.com/VitoVan/kitgen/releases/download/continuous-windows/windows-tclkit-gui.ex
     fi
