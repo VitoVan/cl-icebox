@@ -79,6 +79,7 @@ There's two options:
 - [Tcl/Tk](https://www.tcl.tk/)
 - Tclkit build system http://tclkit.googlecode.com/, [forked here](https://github.com/VitoVan/kitgen)
 - [Resource Hacker](http://www.angusj.com/resourcehacker/)
+- [Resource Cracker](https://www.pelock.com/products/resource-cracker)
 - [Warp](https://github.com/dgiagio/warp)
 - [AppImage](https://appimage.org/)
 

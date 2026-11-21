@@ -30,6 +30,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export SBCL_HOME="C:\Program Files/sbcl/lib/sbcl/"; fi
   - cd ..
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export RH="C:\Program Files (x86)/Resource Hacker/ResourceHacker.exe"; fi
+  # Alternative: Resource Cracker https://www.pelock.com/download/resource-cracker.exe
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cd ./.travis && ./whereis-editbin.bat && cd ..; fi
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export EB=`cat ./.travis/EDITBIN_PATH`; fi
   - wget https://beta.quicklisp.org/quicklisp.lisp
